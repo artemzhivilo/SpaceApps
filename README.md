@@ -11,7 +11,7 @@ and lets you jump to or quit any app on any desktop.
   moment you swipe to another desktop. Up to 8 icons, then `+N`.
 - **Click it** for a menu grouped by desktop:
   - **Click an app** to switch to it. If it's on another desktop, macOS takes you there.
-  - **Click the ⊗** on the right of a row to quit that app. The menu stays open so you can quit several.
+  - **Click the ⊗** on the right of a row to quit that app. 
   - Also: Launch at Login, Quit.
 - Only windows you can actually see count: hidden, minimized and closed-in-the-background windows
   don't show up.
@@ -68,11 +68,6 @@ change them. If a call disappears, SpaceApps falls back to "windows on screen" i
   desktop keeps you where you are. That's how macOS switches to apps.
 - The icons update when macOS announces the desktop switch, at the end of the slide animation.
 - Main display only.
-
-## Experiments
-
-`Experiments/` keeps two ideas that didn't make it (swipe tuning, and app icons inside Mission
-Control), with notes on what was learned. They aren't built into the app.
 
 ## License
 

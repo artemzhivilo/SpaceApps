@@ -3,8 +3,7 @@
 A tiny macOS menu bar app that shows which apps are on your current desktop (Space),
 and lets you jump to or quit any app on any desktop.
 
-<!-- Add a screenshot of the menu here: docs/screenshot.png -->
-<!-- ![SpaceApps menu](docs/screenshot.png) -->
+<img src="docs/screenshot.png" alt="SpaceApps: the menu bar strip with the current desktop's app icons, and its menu listing each desktop's apps with quit buttons" width="262">
 
 ## What it does
 

@@ -183,12 +183,6 @@ final class StatusController: NSObject, NSMenuDelegate {
             menu.addItem(.separator())
         }
 
-        let missionControl = NSMenuItem(title: "Mission Control", action: #selector(openMissionControl), keyEquivalent: "")
-        missionControl.target = self
-        missionControl.image = NSImage(systemSymbolName: "rectangle.3.group", accessibilityDescription: nil)
-        menu.addItem(missionControl)
-        menu.addItem(.separator())
-
         let login = NSMenuItem(title: loginTitle(), action: #selector(toggleLaunchAtLogin), keyEquivalent: "")
         login.target = self
         login.state = SMAppService.mainApp.status == .enabled ? .on : .off
@@ -208,11 +202,6 @@ final class StatusController: NSObject, NSMenuDelegate {
         } else {
             NSRunningApplication(processIdentifier: app.pid)?.activate()
         }
-    }
-
-    @objc private func openMissionControl() {
-        let url = URL(fileURLWithPath: "/System/Applications/Mission Control.app")
-        NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration())
     }
 
     private func loginTitle() -> String {

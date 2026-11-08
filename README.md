@@ -12,7 +12,7 @@ and lets you jump to or quit any app on any desktop.
 - **Click it** for a menu grouped by desktop:
   - **Click an app** to switch to it. If it's on another desktop, macOS takes you there.
   - **Click the ⊗** on the right of a row to quit that app. The menu stays open so you can quit several.
-  - Also: Mission Control, Launch at Login, Quit.
+  - Also: Launch at Login, Quit.
 - Only windows you can actually see count: hidden, minimized and closed-in-the-background windows
   don't show up.
 

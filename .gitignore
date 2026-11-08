@@ -1,0 +1,8 @@
+# SwiftPM build output
+.build/
+.swiftpm/
+
+# Bundled app from scripts/build.sh
+build/
+
+.DS_Store

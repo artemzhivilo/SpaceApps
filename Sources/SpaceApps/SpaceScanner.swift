@@ -5,11 +5,26 @@ struct SpaceApp: Equatable {
     let pid: pid_t
     let name: String
     let bundleURL: URL?
+    let bundleID: String?
+}
+
+extension SpaceApp {
+    /// Switches to the app. If its windows are on another desktop, macOS moves you there.
+    func activate() {
+        if let bundleURL {
+            let config = NSWorkspace.OpenConfiguration()
+            config.activates = true
+            NSWorkspace.shared.openApplication(at: bundleURL, configuration: config)
+        } else {
+            NSRunningApplication(processIdentifier: pid)?.activate()
+        }
+    }
 }
 
 /// A Space (desktop) on the main display, in Mission Control order.
 struct Space {
     let id: UInt64
+    let uuid: String?  // what macOS's "Assign To This Desktop" locks refer to
     let isFullScreen: Bool
 }
 
@@ -34,7 +49,7 @@ enum SpaceScanner {
             guard let (pid, wid, app) = normalAppWindow(w), !seen.contains(pid),
                   spaces(of: wid, cid: cid)?.contains(activeSpace) ?? true else { continue }
             seen.insert(pid)
-            apps.append(SpaceApp(pid: pid, name: app.localizedName ?? "App", bundleURL: app.bundleURL))
+            apps.append(SpaceApp(pid: pid, name: app.localizedName ?? "App", bundleURL: app.bundleURL, bundleID: app.bundleIdentifier))
         }
         return sorted(apps)
     }
@@ -46,7 +61,7 @@ enum SpaceScanner {
               let spaces = main["Spaces"] as? [[String: Any]] else { return [] }
         return spaces.compactMap { info in
             guard let id = (info["id64"] as? NSNumber ?? info["ManagedSpaceID"] as? NSNumber)?.uint64Value else { return nil }
-            return Space(id: id, isFullScreen: (info["type"] as? NSNumber)?.intValue == 4)
+            return Space(id: id, uuid: info["uuid"] as? String, isFullScreen: (info["type"] as? NSNumber)?.intValue == 4)
         }
     }
 
@@ -68,7 +83,7 @@ enum SpaceScanner {
                   let windowSpaces = spaces(of: wid, cid: cid) else { continue }
             for space in windowSpaces where wanted.contains(space) {
                 if seen[space, default: []].insert(pid).inserted {
-                    result[space, default: []].append(SpaceApp(pid: pid, name: app.localizedName ?? "App", bundleURL: app.bundleURL))
+                    result[space, default: []].append(SpaceApp(pid: pid, name: app.localizedName ?? "App", bundleURL: app.bundleURL, bundleID: app.bundleIdentifier))
                 }
             }
         }

@@ -31,7 +31,12 @@ cat > "$APP/Contents/Info.plist" <<'PLIST'
 </plist>
 PLIST
 
-codesign --force --sign - "$APP"
+# Sign with your Apple Development certificate if you have one (Xcode → Settings → Accounts),
+# so macOS keeps SpaceApps' Accessibility permission across rebuilds. Otherwise sign ad hoc,
+# and turn Accessibility off and on again after each rebuild.
+IDENTITY=$(security find-identity -v -p codesigning 2>/dev/null | awk -F'"' '/Apple Development/ { print $2; exit }')
+codesign --force --sign "${IDENTITY:--}" "$APP"
+echo "Signed with: ${IDENTITY:-ad hoc}"
 
 # Install and (re)start
 pkill -x SpaceApps 2>/dev/null || true
